@@ -29,7 +29,7 @@ struct ContentView: View {
     
     let measurementUnits = ["meters", "km", "feet", "yards", "miles"]
     let measurementUnitsValues = [1.0, 0.001, 3.28084, 1.09361, 0.000621371]
-        
+    
     var outputValue: Double {
         let inputValueInMeters = Double(userInput) * measurementUnitsValues[0]
         return inputValueInMeters / measurementUnitsValues[1]
@@ -42,6 +42,8 @@ struct ContentView: View {
             Form {
                 Section {
                     TextField("Input", value: $userInput, format: .number)
+                        .keyboardType(.decimalPad)
+                        .focused($inputFocused)
                 } header: {
                     Text("Input Measurement:")
                 }
