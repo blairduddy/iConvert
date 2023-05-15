@@ -21,8 +21,9 @@ import SwiftUI
 
 struct ContentView: View {
     
+    @FocusState private var inputFocused: Bool
     @State private var userInput = 0.0
-    @State private var userUnit = "meters"
+    @State private var inputUnit = "meters"
     @State private var userOutput = 0.0
     @State private var outputUnit = "km"
     
@@ -47,7 +48,7 @@ struct ContentView: View {
                 
                 
                 Section {
-                    Picker("Units", selection: $userUnit) {
+                    Picker("Units", selection: $inputUnit) {
                         ForEach(measurementUnits, id: \.self) {
                             Text($0)
                         }
@@ -78,6 +79,15 @@ struct ContentView: View {
                 
             }
             .navigationTitle("iConvert")
+            .toolbar {
+                ToolbarItemGroup(placement: .keyboard) {
+                    Spacer()
+                    
+                    Button("Done") {
+                        inputFocused = false
+                    }
+                }
+            }
         }
         
     }
