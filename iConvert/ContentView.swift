@@ -23,16 +23,16 @@ struct ContentView: View {
     
     @FocusState private var inputFocused: Bool
     @State private var userInput = 0.0
-    @State private var inputUnit = "meters"
+    @State private var inputUnit = 0
     @State private var userOutput = 0.0
-    @State private var outputUnit = "km"
+    @State private var outputUnit = 0
     
     let measurementUnits = ["meters", "km", "feet", "yards", "miles"]
     let measurementUnitsValues = [1.0, 0.001, 3.28084, 1.09361, 0.000621371]
     
     var outputValue: Double {
-        let inputValueInMeters = Double(userInput) * measurementUnitsValues[0]
-        return inputValueInMeters / measurementUnitsValues[1]
+        let inputValueInMeters = userInput * measurementUnitsValues[inputUnit]
+        return inputValueInMeters / measurementUnitsValues[outputUnit]
     }
     
     
@@ -51,8 +51,8 @@ struct ContentView: View {
                 
                 Section {
                     Picker("Units", selection: $inputUnit) {
-                        ForEach(measurementUnits, id: \.self) {
-                            Text($0)
+                        ForEach(0..<measurementUnits.count, id: \.self) {
+                            Text(measurementUnits[$0])
                         }
                     }
                     .pickerStyle(.segmented)
@@ -63,8 +63,8 @@ struct ContentView: View {
                 
                 Section {
                     Picker("Output Units", selection: $outputUnit) {
-                        ForEach(measurementUnits, id: \.self) {
-                            Text($0)
+                        ForEach(0..<measurementUnits.count, id: \.self) {
+                            Text(measurementUnits[$0])
                         }
                     }
                     .pickerStyle(.segmented)
